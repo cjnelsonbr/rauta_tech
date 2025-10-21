@@ -120,6 +120,7 @@ GRANT ALL PRIVILEGES ON rauta_tech.* TO 'rauta_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
+
 ### 3.1 Configuração do Usuário Administrador (Padrão)
 
 Para acessar o painel administrativo, é necessário criar um usuário com a função `admin`. Por padrão, o sistema não cria um usuário administrador automaticamente. Siga os passos abaixo para criar um usuário administrador com as credenciais padrão:
@@ -133,12 +134,12 @@ Primeiro, precisamos gerar o hash da senha padrão (`admin123456`) usando `bcryp
 
 1.  **Instale `bcrypt`:**
     Navegue até a raiz do projeto e instale a dependência `bcrypt`:
-    ```bash
-pnpm install bcrypt
-    ```
-
+    ``` bash
+    pnpm install bcrypt
+    ``` 
 2.  **Crie um script para gerar o hash:**
     Crie um arquivo chamado `generate_admin_hash.js` na raiz do seu projeto com o seguinte conteúdo:
+    
     ````javascript
 // generate_admin_hash.js
 import bcrypt from "bcrypt";
