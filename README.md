@@ -133,8 +133,7 @@ Primeiro, precisamos gerar o hash da senha padrão (`admin123456`) usando `bcryp
 
 2.  **Crie um script para gerar o hash:**
     Crie um arquivo chamado `generate_admin_hash.js` na raiz do seu projeto com o seguinte conteúdo:
-    ```javascript
-// generate_admin_hash.js
+    ```javascript // generate_admin_hash.js
 import bcrypt from "bcrypt";
 
 const password = "admin1234456"; // Senha padrão do administrador
