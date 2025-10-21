@@ -120,14 +120,14 @@ GRANT ALL PRIVILEGES ON rauta_tech.* TO 'rauta_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
-Configuração do Usuário Administrador (Padrão)
+### 3.1 Configuração do Usuário Administrador (Padrão)
 
 Para acessar o painel administrativo, é necessário criar um usuário com a função `admin`. Por padrão, o sistema não cria um usuário administrador automaticamente. Siga os passos abaixo para criar um usuário administrador com as credenciais padrão:
 
 *   **Email:** `admin@rauta.tech`
 *   **Senha:** `admin123456`
 
-#### 3.1. Gerar o Hash da Senha
+#### 3.2. Gerar o Hash da Senha
 
 Primeiro, precisamos gerar o hash da senha padrão (`admin123456`) usando `bcrypt`.
 
@@ -166,7 +166,7 @@ node generate_admin_hash.js
     ```
     **Copie o hash gerado** (a string que começa com `$2b$10$`). Você precisará dele no próximo passo.
 
-#### 3.2. Inserir o Usuário Administrador no Banco de Dados
+#### 3.3. Inserir o Usuário Administrador no Banco de Dados
 
 Agora que você tem o hash da senha, insira o usuário administrador diretamente no banco de dados MySQL.
 
