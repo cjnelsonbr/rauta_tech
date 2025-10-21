@@ -139,6 +139,8 @@ Primeiro, precisamos gerar o hash da senha padrão (`admin123456`) usando `bcryp
     ``` 
 2.  **Crie um script para gerar o hash:**
     Crie um arquivo chamado `generate_admin_hash.js` na raiz do seu projeto com o seguinte conteúdo:
+
+``` bash
     
     ````javascript
 // generate_admin_hash.js
@@ -155,6 +157,8 @@ bcrypt.hash(password, saltRounds, function(err, hash) {
     }
 });
     ````
+```
+    
 
 3.  **Execute o script e copie o hash:**
     Execute o script usando `node`. O `package.json` do projeto define `"type": "module"`, então o `import` funcionará.
