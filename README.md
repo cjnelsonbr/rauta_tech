@@ -120,6 +120,72 @@ GRANT ALL PRIVILEGES ON rauta_tech.* TO 'rauta_user'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 ```
+### 3.1 Gerar o Hash da Senha
+
+Primeiro, precisamos gerar o hash da senha padrão (`admin123456`) usando `bcrypt`.
+
+1.  **Instale `bcrypt`:**
+    Navegue até a raiz do projeto e instale a dependência `bcrypt`:
+    ```bash
+    cd /caminho/para/seu/projeto/rauta_tech
+    pnpm install bcrypt
+    ```
+
+2.  **Crie um script para gerar o hash:**
+    Crie um arquivo chamado `generate_admin_hash.js` na raiz do seu projeto com o seguinte conteúdo:
+    ```javascript
+// generate_admin_hash.js
+import bcrypt from "bcrypt";
+
+const password = "admin1234456"; // Senha padrão do administrador
+const saltRounds = 10;
+
+bcrypt.hash(password, saltRounds, function(err, hash) {
+    if (err) {
+        console.error("Erro ao gerar hash:", err);
+    } else {
+        console.log("Hash da senha gerado:", hash);
+    }
+});
+    ```
+
+3.  **Execute o script e copie o hash:**
+    Execute o script usando `node`. O `package.json` do projeto define `"type": "module"`, então o `import` funcionará.
+    ```bash
+    node generate_admin_hash.js
+    ```
+    Você verá uma saída similar a esta:
+    ```
+    Hash da senha gerado: $2b$10$SEU_HASH_GERADO_AQUI
+    ```
+    **Copie o hash gerado** (a string que começa com `$2b$10$`). Você precisará dele no próximo passo.
+
+### 3. Inserir o Usuário Administrador no Banco de Dados
+
+Agora que você tem o hash da senha, insira o usuário administrador diretamente no banco de dados MySQL.
+
+1.  **Crie um script SQL para inserção:**
+    Crie um arquivo chamado `insert_admin_user.sql` na raiz do seu projeto com o seguinte conteúdo. **Lembre-se de substituir `SEU_HASH_GERADO_AQUI` pelo hash que você copiou no passo anterior.**
+    ```sql
+-- insert_admin_user.sql
+USE rauta_tech;
+
+INSERT INTO users (id, email, password, name, role, loginMethod) VALUES (
+    CONCAT("user_", UNIX_TIMESTAMP(NOW()), "_", SUBSTRING(MD5(RAND()), 1, 9)),
+    "admin@rauta.tech",
+    "SEU_HASH_GERADO_AQUI", -- SUBSTITUA ESTE TEXTO PELO HASH REAL
+    "Admin User",
+    "admin",
+    "email"
+);
+    ```
+
+2.  **Execute o script SQL:**
+    Execute o script SQL usando o cliente MySQL. Certifique-se de estar no diretório raiz do seu projeto.
+    ```bash
+    sudo mysql < insert_admin_user.sql
+    ```
+    Você deverá ver uma saída como `Query OK, 1 row affected (...)`, indicando que o usuário foi inserido com sucesso.
 
 ### 4. Configurar Variáveis de Ambiente
 
